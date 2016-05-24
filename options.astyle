@@ -1,0 +1,51 @@
+# Options passed to astyle to beautify C++ code
+
+# Have brackets in different lines
+--style=allman
+
+# Add brackets to one-liners
+--add-brackets
+
+# 4 spaces per indent
+--indent=spaces=4
+
+# Indent class blocks
+--indent-classes
+
+# Indent switch blocks
+--indent-switches
+
+# Indent nested preprocessor blocks
+--indent-preproc-block
+
+--indent-col1-comments
+
+# Maximum indent of multiline statements
+--max-instatement-indent=60
+
+# Leave a line before and after blocks (if, for, while...)
+--break-blocks
+
+# Leave a space before and after numerical operators
+--pad-oper
+
+# Leave a comment between a header (if, for...) and the following parenthesis
+--pad-header
+
+# Attach pointer and reference operators to the referenced type
+--align-pointer=type
+
+# Remove blank space between nested templates closing '>' (> > becomes >>)
+# This is only supported for C++11
+--close-templates
+
+# Set max code length of 90
+--max-code-length=90
+
+# Break lines after a logical operator
+--break-after-logical
+
+# Use LF as end of line style
+--lineend=linux
+
+--verbose
