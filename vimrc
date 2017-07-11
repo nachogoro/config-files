@@ -50,7 +50,7 @@ set number
 set relativenumber
 set tabstop=4
 vmap <C-c> "+y
-map <C-v> "+p
+"map <C-V> "+p
 " set smartindent
 set showtabline=1
 set shiftwidth=4
@@ -266,3 +266,6 @@ let g:pymode_rope_completion=0
 " This needs to come after the Python configuration.
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.cpp,*cxx,*.h match BadWhitespace /\s\+$/
+
+" Something is adding ':' to the keywords, remove it:
+set iskeyword-=:
