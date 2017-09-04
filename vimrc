@@ -255,7 +255,12 @@ EOF
 
 " python-mode
 let g:pymode_python='python3'
-let g:pymode_rope_completion=0
+let g:pymode_rope_completion=1
+" Let syntastic run the checks for Python files when saving
+let g:pymode_lint_on_write=0
+" Disable preview of documentation when selecting an option from the
+" autocomplete menu
+set completeopt=menuone
 
 """""""""""""""""""""""""""""""
 " End of Python configuration "
@@ -266,6 +271,3 @@ let g:pymode_rope_completion=0
 " This needs to come after the Python configuration.
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.cpp,*cxx,*.h match BadWhitespace /\s\+$/
-
-" Something is adding ':' to the keywords, remove it:
-set iskeyword-=:
