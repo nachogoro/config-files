@@ -10,19 +10,18 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'wojtekmach/vim-rename'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'craigemery/vim-autotag'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'scrooloose/syntastic'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'python-mode/python-mode'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
 " Necessary to install vim-session
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
@@ -50,8 +49,6 @@ set number
 set relativenumber
 set tabstop=4
 vmap <C-c> "+y
-"map <C-V> "+p
-" set smartindent
 set showtabline=1
 set shiftwidth=4
 set listchars=tab:\|\ ,trail:-
@@ -128,14 +125,11 @@ endfu
 " Set ctags file
 set tags=.tags;/
 
-" Shortcuts for navigating to definitions using ctags
+" Shortcuts for navigating to definitions using YouCompleteMe
 " Open definition in new vertical split
-map <leader>ds :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+map <leader>ds :vsp <CR>:exec("YcmCompleter GoToDefinitionElseDeclaration")<CR>
 " Open definition in new tab
-map <leader>dt :tab split<CR>:exec("tag ".expand("<cword>"))<CR>
-
-" vim-autotag
-let g:autotagTagsFile=".tags"
+map <leader>dt :tab split<CR>:exec("YcmCompleter GoToDefinitionElseDeclaration")<CR>
 
 " The Silver Searcher
 if executable('ag')
@@ -148,9 +142,6 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-
-" grep for word under cursor
-"nnoremap <leader>g :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 
 " Fix order of ag results
 if executable('matcher')
@@ -183,9 +174,6 @@ end
 " Fuzzy search in buffer
 nnoremap <c-n> :CtrlPLine<CR>
 
-" Display the documentation for a method using YouCompleteMe instead of pydoc
-nnoremap K :YcmCompleter GetDoc<CR>
-
 " Session management
 " Save current session as default
 map <leader>ss :SaveSession 
@@ -195,6 +183,8 @@ map <leader>os :OpenSession
 let g:session_autoload = 'no'
 let g:session_autosave = 'no'
 
+" Make fugitive open vertical splits
+set diffopt+=vertical
 
 " Configure syntastic with default settings
 set statusline+=%#warningmsg#
@@ -217,6 +207,9 @@ python3 del powerline_setup
 " Configure YouCompleteMe
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+" Display the documentation for a method using YouCompleteMe instead of pydoc
+nnoremap K :YcmCompleter GetDoc<CR>
 
 
 " Use ViM's old reg exp engine, since the new one is not great in some
@@ -255,7 +248,12 @@ EOF
 
 " python-mode
 let g:pymode_python='python3'
-let g:pymode_rope_completion=1
+" Disable rope completion, since it clashes with YouCompleteMe
+let g:pymode_rope=0
+let g:pymode_rope_completion=0
+let g:pymode_rope_complete_on_dot=0
+let g:pymode_rope_lookup_project=0
+
 " Let syntastic run the checks for Python files when saving
 let g:pymode_lint_on_write=0
 " Disable preview of documentation when selecting an option from the
@@ -265,7 +263,6 @@ set completeopt=menuone
 """""""""""""""""""""""""""""""
 " End of Python configuration "
 """""""""""""""""""""""""""""""
-
 
 " Flag extraneous whitespace.
 " This needs to come after the Python configuration.
