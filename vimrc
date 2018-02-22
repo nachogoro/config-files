@@ -10,8 +10,10 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
+Plugin 'Houl/repmo-vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'derekwyatt/vim-fswitch'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'python-mode/python-mode'
 Plugin 'scrooloose/nerdcommenter'
@@ -130,6 +132,9 @@ set tags=.tags;/
 map <leader>ds :vsp <CR>:exec("YcmCompleter GoToDefinitionElseDeclaration")<CR>
 " Open definition in new tab
 map <leader>dt :tab split<CR>:exec("YcmCompleter GoToDefinitionElseDeclaration")<CR>
+
+" Shortcut to switch between header and source file in C/C++
+map <leader>gh :FSHere<CR>
 
 " The Silver Searcher
 if executable('ag')
@@ -268,3 +273,26 @@ set completeopt=menuone
 " This needs to come after the Python configuration.
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.cpp,*cxx,*.h match BadWhitespace /\s\+$/
+
+
+"""""""""""""
+" repmo-vim "
+"""""""""""""
+" map a motion and its reverse motion:
+:noremap <expr> h repmo#SelfKey('h', 'l')|sunmap h
+:noremap <expr> l repmo#SelfKey('l', 'h')|sunmap l
+:noremap <expr> <Up> repmo#Key('<Up>', '<Down>')|sunmap <Up>
+:noremap <expr> <Down> repmo#Key('<Down>', '<Up>')|sunmap <Down>
+" if you like `:noremap j gj', you can keep that:
+:map <expr> j repmo#Key('gj', 'gk')|sunmap j
+:map <expr> k repmo#Key('gk', 'gj')|sunmap k
+
+" repeat the last [count]motion or the last zap-key:
+:map <expr> ; repmo#LastKey(';')|sunmap ;
+:map <expr> - repmo#LastRevKey('-')|sunmap -
+
+" add these mappings when repeating with `;' or `,':
+:noremap <expr> f repmo#ZapKey('f')|sunmap f
+:noremap <expr> F repmo#ZapKey('F')|sunmap F
+:noremap <expr> t repmo#ZapKey('t')|sunmap t
+:noremap <expr> T repmo#ZapKey('T')|sunmap T
