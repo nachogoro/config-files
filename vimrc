@@ -24,6 +24,7 @@ Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'fisadev/vim-isort'
 " Necessary to install vim-session
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
@@ -273,6 +274,10 @@ set completeopt=menuone
 " This needs to come after the Python configuration.
 highlight BadWhitespace ctermbg=red guibg=darkred
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.cpp,*cxx,*.h match BadWhitespace /\s\+$/
+
+" Configuration for vim-isort
+let g:vim_isort_map = ''
+let g:vim_isort_python_version = 'python3'
 
 
 """""""""""""
