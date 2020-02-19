@@ -69,8 +69,11 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-" Dark color scheme
-colorscheme desertink
+" Dark color scheme (disabled)
+" colorscheme desertink
+
+" Light color scheme
+colorscheme solarized
 
 " Autocomplete like bash
 set wildmode=longest,list,full
@@ -126,7 +129,7 @@ fu! s:yank_before_pattern() abort
 endfu
 
 " Set ctags file
-set tags=.tags;/
+set tags=tags;/
 
 " Shortcuts for navigating to definitions using YouCompleteMe
 " Open definition in new vertical split
@@ -137,6 +140,17 @@ map <leader>dt :tab split<CR>:exec("YcmCompleter GoToDefinitionElseDeclaration")
 " Shortcut to switch between header and source file in C/C++
 map <leader>gh :FSHere<CR>
 
+
+" Although ag can normally allow CtrlP to avoid caching, it's better to leave
+" it enabled for large source code bases
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+
+" Ignore some folders and files for CtrlP indexing
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\.git$\|\.yardoc\|public$|log\|tmp$',
+  \ 'file': '\.so$\|\.dat$|\.DS_Store$'
+  \ }
+
 " The Silver Searcher
 if executable('ag')
   " Use ag over grep
@@ -144,9 +158,6 @@ if executable('ag')
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
 endif
 
 " Fix order of ag results
