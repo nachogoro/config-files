@@ -25,6 +25,8 @@ Plugin 'tpope/vim-eunuch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
+Plugin 'micha/vim-colors-solarized'
+Plugin 'adah1972/vim-copy-as-rtf'
 " Necessary to install vim-session
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
@@ -73,6 +75,8 @@ nnoremap <C-H> <C-W><C-H>
 " colorscheme desertink
 
 " Light color scheme
+let g:solarized_termcolors=256
+set background=light
 colorscheme solarized
 
 " Autocomplete like bash
