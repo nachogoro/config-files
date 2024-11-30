@@ -27,6 +27,8 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'micha/vim-colors-solarized'
 Plugin 'adah1972/vim-copy-as-rtf'
+Plugin 'udalov/kotlin-vim'
+Plugin 'elixir-editors/vim-elixir'
 " Necessary to install vim-session
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
@@ -47,6 +49,10 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 set encoding=utf-8
+
+" Work-around for disappearing cursor when splitting the window:
+" https://github.com/vim/vim/issues/480
+set guioptions-=L
 
 let mapleader=","
 set mouse=a
@@ -316,3 +322,34 @@ let g:vim_isort_python_version = 'python3'
 :noremap <expr> F repmo#ZapKey('F')|sunmap F
 :noremap <expr> t repmo#ZapKey('t')|sunmap t
 :noremap <expr> T repmo#ZapKey('T')|sunmap T
+
+""""""""""""""""
+" clang-format "
+""""""""""""""""
+if has('python')
+  map <C-K> :pyf /usr/share/clang/clang-format.py<cr>
+  imap <C-K> <c-o>:pyf /usr/share/clang/clang-format.py<cr>
+elseif has('python3')
+  map <C-K> :py3f /usr/share/clang/clang-format.py<cr>
+  imap <C-K> <c-o>:py3f /usr/share/clang/clang-format.py<cr>
+endif
+
+""""""""""""""""""""
+" Custom functions "
+""""""""""""""""""""
+function! AccentuateVowel()
+    let l:char = getline('.')[col('.') - 1]
+    let l:accents_lower = {'a': 'á', 'e': 'é', 'i': 'í', 'o': 'ó', 'u': 'ú'}
+    let l:accents_upper = {'A': 'Á', 'E': 'É', 'I': 'Í', 'O': 'Ó', 'U': 'Ú'}
+
+    if l:char =~# '[aeiou]'
+        let l:newChar = l:accents_lower[tolower(l:char)]
+    elseif l:char =~# '[AEIOU]'
+        let l:newChar = l:accents_upper[toupper(l:char)]
+    else
+        return
+    endif
+    execute 'normal! r' . l:newChar
+endfunction
+
+nnoremap <leader>a :call AccentuateVowel()<CR>
